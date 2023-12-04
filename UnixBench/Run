@@ -189,6 +189,18 @@ my $testList = {
 
     "ubgears"       => undef,
 
+    "rl-hanoi"      => undef,
+    "rl-pipe"       => undef,
+    "rl-fstime-w"   => undef,
+    "rl-fstime-r"   => undef,
+    "rl-fstime"     => undef,
+    "rl-fsbuffer-w" => undef,
+    "rl-fsbuffer-r" => undef,
+    "rl-fsbuffer"   => undef,
+    "rl-fsdisk-w"   => undef,
+    "rl-fsdisk-r"   => undef,
+    "rl-fsdisk"     => undef,
+
     # Named combos and shorthands.
     "arithmetic"    => $arithmetic,
     "dhry"          => [ "dhry2reg" ],
@@ -203,6 +215,7 @@ my $testList = {
     "fs"            => $fs,
     "shell"         => [ "shell1", "shell8", "shell16" ],
     "graphics"      => $graphics,
+    "ringleader"    => ["hanoi", "rl-hanoi"],
 
     # The tests which constitute the official index.
     "index"         => $index,
@@ -257,10 +270,17 @@ my $testParams = {
         "options" => "10",
     },
     "pipe" => {
-        "logmsg" => "Pipe Throughput",
+        "logmsg" => "Pipe Throughput (Ringleader)",
         "cat"    => 'system',
         "repeat" => 'long',
         "options" => "10",
+    },
+    "rl-pipe" => {
+        "logmsg" => "Pipe Throughput",
+        "cat"    => 'system',
+        "repeat" => 'long',
+        "prog" => "ringleader",
+        "options" => "pipe 10",
     },
     "spawn" => {
         "logmsg" => "Process Creation",
@@ -478,6 +498,12 @@ my $testParams = {
         "cat"    => 'misc',
         "options" => "20",
     },
+    "rl-hanoi" => {
+        "logmsg" => "Recursion Test -- Tower of Hanoi (Ringleader)",
+        "cat"    => 'misc',
+        "prog"   => "ringleader",
+        "options" => "hanoi 20",
+    },
     "grep" => {
         "logmsg" => "Grep a large file (system's grep)",
         "cat"    => 'misc',
@@ -693,7 +719,7 @@ sub processCpuFlags {
 # Get information on the CPUs in the system.  Returns a reference to an
 # array of N entries, one per CPU, where each entry is a hash containing
 # these fields:
-# describing the model etc.  Returns undef if the information can't be got.
+# describing the uodel etc.  Returns undef if the information can't be got.
 #
 # future: on systems without /proc/cpuinfo, might check for Perl modules:
 #   Sys::Info::Device::CPU or Sys::CpuAffinity
@@ -709,6 +735,9 @@ sub getCpuInfo {
             next if (!$field || !$val);
             if ($field eq "processor") {
                 $cpu = $val;
+                $cpus->[$cpu]{'model'} = "unknown";
+                $cpus->[$cpu]{'bogo'} = "unknown";
+                $cpus->[$cpu]{'flags'} = "unknown";
             } elsif ($field eq "model name") {
                 my $model = $val;
                 $model =~ s/  +/ /g;
@@ -842,7 +871,8 @@ sub getSystemInfo {
     $info->{'graphics'} = getCmdOutput("3dinfo | cut -f1 -d\'(\'");
 
     # Get system run state, load and usage info.
-    $info->{'runlevel'} = getCmdOutput("who -r | awk '{print \$3}'");
+    #$info->{'runlevel'} = getCmdOutput("who -r | awk '{print \$3}'");
+    $info->{'runlevel'} = "???";
     $info->{'load'} = getCmdOutput("uptime");
     $info->{'numUsers'} = getCmdOutput("who | wc -l");
 
@@ -1900,7 +1930,8 @@ sub main {
     my @creatingDirectories = ( ${TMPDIR}, ${RESULTDIR} );
     createDirrectoriesIfNotExists(@creatingDirectories);
 
-    preChecks();
+	# RTH - We will precompile the 
+	# preChecks();
     my $systemInfo = getSystemInfo();
 
     # If the number of copies to run was not set, set it to 1
