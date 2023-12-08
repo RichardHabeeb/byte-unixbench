@@ -173,6 +173,7 @@ my $testList = {
     "C"             => undef,
     "dc"            => undef,
     "hanoi"         => undef,
+    "socket"         => undef,
     "grep"          => undef,
     "sysexec"       => undef,
 
@@ -275,8 +276,13 @@ my $testParams = {
         "repeat" => 'long',
         "options" => "10",
     },
+    "socket" => {
+        "logmsg" => "Socket Throughput",
+        "cat"    => 'system',
+        "repeat" => 'long',
+    },
     "rl-pipe" => {
-        "logmsg" => "Pipe Throughput",
+        "logmsg" => "Pipe Throughput (Ringleader)",
         "cat"    => 'system',
         "repeat" => 'long',
         "prog" => "ringleader",

@@ -140,7 +140,7 @@ SCRIPTS = unixbench.logo multi.sh tst.sh index.base
 SOURCES = arith.c big.c context1.c \
 	dummy.c execl.c \
 	fstime.c hanoi.c \
-	pipe.c spawn.c \
+	pipe.c spawn.c socket.c \
 	syscall.c looper.c timeit.c time-polling.c \
 	dhry_1.c dhry_2.c dhry.h whets.c ubgears.c
 TESTS = sort.src cctest.c dc.dat large.txt
@@ -155,7 +155,7 @@ endif
 BINS = $(PROGDIR)/arithoh $(PROGDIR)/register $(PROGDIR)/short \
 	$(PROGDIR)/int $(PROGDIR)/long $(PROGDIR)/float $(PROGDIR)/double \
 	$(PROGDIR)/hanoi $(PROGDIR)/syscall $(PROGDIR)/context1 \
-	$(PROGDIR)/pipe $(PROGDIR)/spawn $(PROGDIR)/execl \
+	$(PROGDIR)/pipe $(PROGDIR)/socket $(PROGDIR)/spawn $(PROGDIR)/execl \
 	$(PROGDIR)/dhry2 $(PROGDIR)/dhry2reg  $(PROGDIR)/looper \
 	$(PROGDIR)/fstime $(PROGDIR)/whetstone-double $(GRAPHIC_BINS)
 ## These compile only on some platforms...
@@ -265,6 +265,7 @@ $(PROGDIR)/whetstone-double: CFLAGS += -DDP -DGTODay -DUNIXBENCH
 $(PROGDIR)/whetstone-double: LDFLAGS += -lm
 
 $(PROGDIR)/pipe: $(SRCDIR)/pipe.c $(SRCDIR)/timeit.c
+$(PROGDIR)/socket: $(SRCDIR)/socket.c $(SRCDIR)/timeit.c
 
 $(PROGDIR)/execl: $(SRCDIR)/execl.c $(SRCDIR)/big.c
 
