@@ -201,6 +201,7 @@ my $testList = {
     "rl-fsdisk-w"   => undef,
     "rl-fsdisk-r"   => undef,
     "rl-fsdisk"     => undef,
+    "rl-socket"     => undef,
 
     # Named combos and shorthands.
     "arithmetic"    => $arithmetic,
@@ -271,7 +272,7 @@ my $testParams = {
         "options" => "10",
     },
     "pipe" => {
-        "logmsg" => "Pipe Throughput (Ringleader)",
+        "logmsg" => "Pipe Throughput",
         "cat"    => 'system',
         "repeat" => 'long',
         "options" => "10",
@@ -280,6 +281,7 @@ my $testParams = {
         "logmsg" => "Socket Throughput",
         "cat"    => 'system',
         "repeat" => 'long',
+        "options" => "10 4444",
     },
     "rl-pipe" => {
         "logmsg" => "Pipe Throughput (Ringleader)",
@@ -287,6 +289,13 @@ my $testParams = {
         "repeat" => 'long',
         "prog" => "ringleader",
         "options" => "pipe 10",
+    },
+    "rl-socket" => {
+        "logmsg" => "Socket Throughput (Ringleader)",
+        "cat"   => 'system',
+        "repeat" => 'long',
+        "prog" => "ringleader",
+        "options" => "socket 10 4454",
     },
     "spawn" => {
         "logmsg" => "Process Creation",
