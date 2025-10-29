@@ -74,7 +74,7 @@ char *argv[];
     }
 
     struct sockaddr recv_sockaddr;
-    socklen_t recv_len;
+    socklen_t recv_len = sizeof(recv_sockaddr);
 
     recv_socket = accept(recv_server, &recv_sockaddr, &recv_len);
     if(recv_socket < 0){

@@ -54,7 +54,7 @@ char	*argv[];
 	int count;
 	for(count = 0; count < argc; ++ count)
 		printf("%s ",argv[count]);
-		printf("\n");
+	printf("\n");
 #endif
 	if (argc < 2)
 		{
